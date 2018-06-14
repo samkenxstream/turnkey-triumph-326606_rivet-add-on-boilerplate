@@ -1,4 +1,4 @@
-import { gatherInput } from './gatherInput';
+import { gatherInput } from './rvt-utils';
 
 const init = () => {
   document.addEventListener("click", gatherInput);
