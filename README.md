@@ -1,6 +1,8 @@
 # rivet-add-on-boilerplate
 A starting point for developing Rivet add-ons
 
+[Download](https://github.com/indiana-university/rivet-add-on-boilerplate/archive/master.zip) | [Demo](https://indiana-university.github.io/rivet-add-on-boilerplate/)
+
 ## Getting started
 1. Clone or download this repo
 2. Run `npm install`
