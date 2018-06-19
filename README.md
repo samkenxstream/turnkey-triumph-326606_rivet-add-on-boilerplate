@@ -7,6 +7,6 @@ A starting point for developing Rivet add-ons
 3. Run `npm run start` to start devlopment server and watch for changes
 
 ## To-do
-- [ ] Add steps to build `dist` folder with compiled and minified versions of add-on `.js` and `.css` files
+- [X] Add steps to build `dist` folder with compiled and minified versions of add-on `.js` and `.css` files
 - [ ] Copy documentation from original boilerplate here: https://github.com/indiana-university/rivet-boilerplate
 - [ ] Add default `CONTRIBUTING.md`, `ISSUE_TEMPLATE.md`, and `PULL_REQEST_TEMPLATE.md` to `.github` folder.
