@@ -4,6 +4,7 @@
   (global.MyComponent = factory());
 }(this, (function () { 'use strict';
 
+  // This is just a fake example function. Delet it and get started.
   var gatherInput = function gatherInput(event) {
     var button = event.target.closest("#my-button");
 
@@ -26,9 +27,9 @@
   /**
    * Export the methods you want to make public inside of this object.
    */
-  var rvtComponent = { init: init };
+  var rivetAddOnBoilerplate = { init: init };
 
-  return rvtComponent;
+  return rivetAddOnBoilerplate;
 
 })));
-//# sourceMappingURL=rvt-component.js.map
+//# sourceMappingURL=rivet-add-on-boilerplate.js.map
