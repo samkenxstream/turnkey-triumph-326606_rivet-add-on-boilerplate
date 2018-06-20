@@ -7,7 +7,6 @@ const init = () => {
   // Logs all the list items on the page
 }
 
-
 /**
  * Export the methods you want to make public inside of this object.
  */
