@@ -53,5 +53,6 @@ All files that are watched by default development task (`npm run start`) are com
 
 ## To-do
 - [X] Add steps to build `dist` folder with compiled and minified versions of add-on `.js` and `.css` files
-- [ ] Copy documentation from original boilerplate here: https://github.com/indiana-university/rivet-boilerplate
+- [X] Copy documentation from original boilerplate here: https://github.com/indiana-university/rivet-boilerplate
+- [ ] Add section to the docs about all the build steps included in `gulpfile.js`. For instance, how to build the `/dist` folder for the final version and minified code.
 - [ ] Add default `CONTRIBUTING.md`, `ISSUE_TEMPLATE.md`, and `PULL_REQEST_TEMPLATE.md` to `.github` folder.
