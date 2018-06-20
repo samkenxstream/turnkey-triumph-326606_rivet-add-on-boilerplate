@@ -12,9 +12,9 @@ Clone this repo `https://github.iu.edu/UITS/rivet-bopilerplate` to the machine w
 Do a find-and-replace of the word "add-on-boilerplate" with the name of your add-on. A find-and-replace should be replaced on *file contents*, as well as for the filenames below
 
 ```
-src/js/rivet-boilerplate.js
-src/sass/rivet-boilerplate.scss
-src/sass/components/rivetboilerplate.scss
+src/js/rivet-add-on-boilerplate.js
+src/sass/rivet-add-on-boilerplate.scss
+src/sass/components/_rivet-add-on-boilerplate.scss
 ```
 
 This can be done with the following commands on a unix based system
