@@ -13,7 +13,7 @@ The Rivet BOILERPLATE add-on requires the use of the core Rivet CSS. You can fin
 <script src="dist/js/rivet-BOILERPLATE.min.js"></script>
 ```
 
-### 2. Add the markup to your HTML
+### 2. Add the markup
 TODO: Add details about the HTML markup required by your add-on to this section.
 
 ```html
