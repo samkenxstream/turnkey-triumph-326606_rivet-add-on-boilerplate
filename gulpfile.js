@@ -17,7 +17,16 @@ const autoprefixer = require('autoprefixer')
 const package = require('./package.json');
 
 // Create the string for the verion number banner.
-const banner = '/*! ' + package.name + ' - @version v' + package.version + ' */' + '\n' + '\n';
+const banner =
+  '/*! ' +
+  package.name +
+  ' - @version v' +
+  package.version +
+  '\n' +
+  '© 2018, The Trustees of Indiana University' +
+  '\n' +
+  ' */' +
+  '\n';
 
 // Development server
 gulp.task('serve', function () {
