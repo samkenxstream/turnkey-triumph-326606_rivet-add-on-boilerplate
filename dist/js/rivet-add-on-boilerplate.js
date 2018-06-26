@@ -1,5 +1,6 @@
-/*! rivet-add-on-boilerplate - @version v0.1.0-alpha */
-
+/*! rivet-add-on-boilerplate - @version v0.1.0-alpha
+© 2018, The Trustees of Indiana University
+ */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
