@@ -1,7 +1,6 @@
-import { gatherInput } from './rvt-utils';
 
 const init = () => {
-  document.addEventListener("click", gatherInput);
+  console.log('Rivet Add-on Boilerplate!');
 }
 
 /**

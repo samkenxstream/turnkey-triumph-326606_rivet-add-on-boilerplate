@@ -4,24 +4,8 @@
   (global.MyComponent = factory());
 }(this, (function () { 'use strict';
 
-  // This is just a fake example function. Delet it and get started.
-  var gatherInput = function gatherInput(event) {
-    var button = event.target.closest("#my-button");
-
-    if (!button) return;
-
-    var message = prompt('What would you like me to say?');
-
-    if (!message) {
-      alert('You need to ask me a question if you want an answer.');
-      return;
-    }
-
-    alert(message);
-  };
-
   var init = function init() {
-    document.addEventListener("click", gatherInput);
+    console.log('Rivet Add-on Boilerplate!');
   };
 
   /**
