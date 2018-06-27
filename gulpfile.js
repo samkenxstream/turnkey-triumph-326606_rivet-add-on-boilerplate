@@ -16,6 +16,9 @@ const cssnano = require('gulp-cssnano');
 const autoprefixer = require('autoprefixer')
 const package = require('./package.json');
 
+// Get the current year for copyright in the banner
+const currentYear = new Date().getFullYear();
+
 // Create the string for the verion number banner.
 const banner =
   '/*! ' +
@@ -23,7 +26,7 @@ const banner =
   ' - @version v' +
   package.version +
   '\n' +
-  '© 2018, The Trustees of Indiana University' +
+  '© ' + currentYear +', The Trustees of Indiana University' +
   '\n' +
   ' */' +
   '\n';
