@@ -19,18 +19,12 @@ src/sass/rivet-add-on-boilerplate.scss
 src/sass/components/_rivet-add-on-boilerplate.scss
 ```
 
-This can be done with the following commands on a unix based system
-
-```
-# TODO write this
-```
-
 ### 2. Include the CSS and JavaScript in your page
 After renaming the CSS and JavaScript files to reflect the name of your add-on, update the `href` and `src` attribute values on lines `10` and `20` in `src/_includes/layouts/base.njk` to point to your renamed files.
 
 ```html
-<link rel="stylesheet" href="dist/css/rivet-add-on-boilerplate.min.css">
-<script src="dist/js/rivet-add-on-boilerplate.min.js"></script>
+<link rel="stylesheet" href="dist/css/rivet-add-on-boilerplate.css">
+<script src="dist/js/rivet-add-on-boilerplate.js"></script>
 ```
 
 ### 3. Add the markup to your HTML
@@ -70,4 +64,5 @@ All files that are watched by default development task (`npm run start`) are com
 - [X] Add steps to build `dist` folder with compiled and minified versions of add-on `.js` and `.css` files
 - [X] Copy documentation from original boilerplate here: https://github.com/indiana-university/rivet-boilerplate
 - [ ] Add section to the docs about all the build steps included in `gulpfile.js`. For instance, how to build the `/dist` folder for the final version and minified code.
+- [ ] Add documentation about using values from `package.json` to create the banner (version, license, etc.) for all files in the `dist/` folder
 - [ ] Add default `CONTRIBUTING.md`, `ISSUE_TEMPLATE.md`, and `PULL_REQEST_TEMPLATE.md` to `.github` folder.

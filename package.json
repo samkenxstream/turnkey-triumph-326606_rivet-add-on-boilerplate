@@ -13,7 +13,7 @@
     "build": "gulp release"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^0.3.5",
     "autoprefixer": "^8.6.3",

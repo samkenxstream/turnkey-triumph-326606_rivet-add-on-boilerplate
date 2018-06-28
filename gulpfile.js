@@ -19,17 +19,13 @@ const package = require('./package.json');
 // Get the current year for copyright in the banner
 const currentYear = new Date().getFullYear();
 
-// Create the string for the verion number banner.
-const banner =
-  '/*! ' +
-  package.name +
-  ' - @version v' +
-  package.version +
-  '\n' +
-  '© ' + currentYear +', The Trustees of Indiana University' +
-  '\n' +
-  ' */' +
-  '\n';
+const banner = `/*!
+ * ${ package.name } - @version ${ package.version }
+ * (c) ${ currentYear }, The Trustees of Indiana University | ${ package.license } License
+ * ${ package.repository.url }
+ */
+
+`;
 
 // Development server
 gulp.task('serve', function () {
