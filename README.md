@@ -9,7 +9,7 @@ This repo is meant to be cloned and used as a starting point for your Rivet add-
 Setting up the Rivet add-on boilerplate repo is a four-step process:
 
 ### 1. Clone this repo
-Clone this repo `https://github.iu.edu/UITS/rivet-bopilerplate` to the computer on which you'll be developing your add-on.
+Clone this repo `https://github.com/indiana-university/rivet-add-on-boilerplate.git` to the computer on which you'll be developing your add-on.
 
 Do a find-and-replace of the word "add-on-boilerplate" with the name of your add-on. A find-and-replace should be replaced on *file contents*, as well as for the filenames below
 
@@ -33,7 +33,7 @@ We've provided a Nunjucks include called `demo-html.njk` where you can put the m
 This is also a great place to add documentation, [accessibility notes](https://rivet.iu.edu/components/navigation/dropdown/#accessibility-notes), or [microcopy guidelines](https://rivet.iu.edu/content-guide/), as the `index.html` file will be built to the `docs` folder and can be published with GitHub Pages.
 
 ### 4. Write add-on documentation, accessibility notes, and microcopy guidelines
-We've proviede a template to use for your `README` file called `README.template.md`. To get started creating the README for your add-on follow these steps:
+We've provide a template to use for your `README` file called `README.template.md`. To get started creating the README for your add-on follow these steps:
 
 1. Delete this file
 2. Rename `README.template.md` to `README.md` (the same as the file you just deleted). This is where you'll put your documentation and any other important information about your add-on.
@@ -56,7 +56,7 @@ After you have Node installed, do the following:
 2. `npm install` to install all dependencies
 3. Run `npm run start` to start a development server and watch for changes to `.scss`, `.js`. `.md` files.
 
-This boilerplate uses [Eleventy](https://www.11ty.io/) to compile Markdown documentation to HTML. It also include Sass for CSS preprocessing and uses [Rollup](https://rollupjs.org/guide/en) to process modern JavaScript (ES6) into JavaScript that can saftely be used in the browser.
+This boilerplate uses [Eleventy](https://www.11ty.io/) to compile Markdown documentation to HTML. It also include Sass for CSS preprocessing and uses [Rollup](https://rollupjs.org/guide/en) to process modern JavaScript (ES6) into JavaScript that can safely be used in the browser.
 
 All files that are watched by default development task (`npm run start`) are compiled to and served from the `/docs` directory.
 
