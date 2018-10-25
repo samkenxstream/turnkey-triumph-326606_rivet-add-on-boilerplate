@@ -1,6 +1,6 @@
 {
   "name": "rivet-add-on-boilerplate",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1",
   "description": "Add the description of your component here",
   "repository": {
     "type": "git",
@@ -8,12 +8,11 @@
   },
   "main": "dist/js/rivet-add-on-boilerplate.js",
   "scripts": {
-    "postinstall": "gulp eleventy && gulp sass && gulp js",
     "start": "gulp",
     "build": "gulp release"
   },
   "author": "",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "devDependencies": {
     "@11ty/eleventy": "^0.3.5",
     "autoprefixer": "^8.6.3",
@@ -30,8 +29,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "pump": "^3.0.0",
-    "rivet-collapsible": "0.1.0-alpha",
-    "rivet-uits": "^1.0.0",
+    "rivet-uits": "^1.1.0",
     "rollup": "^0.60.4",
     "rollup-plugin-babel": "^3.0.4",
     "run-sequence": "^2.2.1"

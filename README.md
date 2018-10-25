@@ -9,7 +9,7 @@ This repo is meant to be cloned and used as a starting point for your Rivet add-
 Setting up the Rivet add-on boilerplate repo is a four-step process:
 
 ### 1. Clone this repo
-Clone this repo `https://github.iu.edu/UITS/rivet-bopilerplate` to the computer on which you'll be developing your add-on.
+Clone this repo `https://github.com/indiana-university/rivet-add-on-boilerplate.git` to the computer on which you'll be developing your add-on.
 
 Do a find-and-replace of the word "add-on-boilerplate" with the name of your add-on. A find-and-replace should be replaced on *file contents*, as well as for the filenames below
 
@@ -19,18 +19,12 @@ src/sass/rivet-add-on-boilerplate.scss
 src/sass/components/_rivet-add-on-boilerplate.scss
 ```
 
-This can be done with the following commands on a unix based system
-
-```
-# TODO write this
-```
-
 ### 2. Include the CSS and JavaScript in your page
 After renaming the CSS and JavaScript files to reflect the name of your add-on, update the `href` and `src` attribute values on lines `10` and `20` in `src/_includes/layouts/base.njk` to point to your renamed files.
 
 ```html
-<link rel="stylesheet" href="dist/css/rivet-add-on-boilerplate.min.css">
-<script src="dist/js/rivet-add-on-boilerplate.min.js"></script>
+<link rel="stylesheet" href="dist/css/rivet-add-on-boilerplate.css">
+<script src="dist/js/rivet-add-on-boilerplate.js"></script>
 ```
 
 ### 3. Add the markup to your HTML
@@ -39,7 +33,7 @@ We've provided a Nunjucks include called `demo-html.njk` where you can put the m
 This is also a great place to add documentation, [accessibility notes](https://rivet.iu.edu/components/navigation/dropdown/#accessibility-notes), or [microcopy guidelines](https://rivet.iu.edu/content-guide/), as the `index.html` file will be built to the `docs` folder and can be published with GitHub Pages.
 
 ### 4. Write add-on documentation, accessibility notes, and microcopy guidelines
-We've proviede a template to use for your `README` file called `README.template.md`. To get started creating the README for your add-on follow these steps:
+We've provide a template to use for your `README` file called `README.template.md`. To get started creating the README for your add-on follow these steps:
 
 1. Delete this file
 2. Rename `README.template.md` to `README.md` (the same as the file you just deleted). This is where you'll put your documentation and any other important information about your add-on.
@@ -62,7 +56,7 @@ After you have Node installed, do the following:
 2. `npm install` to install all dependencies
 3. Run `npm run start` to start a development server and watch for changes to `.scss`, `.js`. `.md` files.
 
-This boilerplate uses [Eleventy](https://www.11ty.io/) to compile Markdown documentation to HTML. It also include Sass for CSS preprocessing and uses [Rollup](https://rollupjs.org/guide/en) to process modern JavaScript (ES6) into JavaScript that can saftely be used in the browser.
+This boilerplate uses [Eleventy](https://www.11ty.io/) to compile Markdown documentation to HTML. It also include Sass for CSS preprocessing and uses [Rollup](https://rollupjs.org/guide/en) to process modern JavaScript (ES6) into JavaScript that can safely be used in the browser.
 
 All files that are watched by default development task (`npm run start`) are compiled to and served from the `/docs` directory.
 
@@ -70,4 +64,5 @@ All files that are watched by default development task (`npm run start`) are com
 - [X] Add steps to build `dist` folder with compiled and minified versions of add-on `.js` and `.css` files
 - [X] Copy documentation from original boilerplate here: https://github.com/indiana-university/rivet-boilerplate
 - [ ] Add section to the docs about all the build steps included in `gulpfile.js`. For instance, how to build the `/dist` folder for the final version and minified code.
+- [ ] Add documentation about using values from `package.json` to create the banner (version, license, etc.) for all files in the `dist/` folder
 - [ ] Add default `CONTRIBUTING.md`, `ISSUE_TEMPLATE.md`, and `PULL_REQEST_TEMPLATE.md` to `.github` folder.
