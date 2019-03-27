@@ -1,11 +1,10 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/core",
       {
         "modules": false
       }
     ]
-  ],
-  "plugins": ["external-helpers"]
+  ]
 }
