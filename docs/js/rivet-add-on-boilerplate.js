@@ -4,14 +4,17 @@
   (global = global || self, global.MyComponent = factory());
 }(this, function () { 'use strict';
 
-  const init = () => {
+  var init = function init() {
     console.log('Rivet Add-on Boilerplate!');
   };
-
   /**
    * Export the methods you want to make public inside of this object.
    */
-  var rivetAddOnBoilerplate = { init };
+
+
+  var rivetAddOnBoilerplate = {
+    init: init
+  };
 
   return rivetAddOnBoilerplate;
 

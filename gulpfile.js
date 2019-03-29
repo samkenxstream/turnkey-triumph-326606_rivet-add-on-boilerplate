@@ -1,19 +1,17 @@
-const { dest, series, src, watch } = require("gulp");
-const gutil = require("gulp-util");
-const cp = require("child_process");
-const sass = require("gulp-sass");
-const rollup = require("rollup");
-const babel = require("gulp-babel");
-const babelEnv = require("babel-preset-env");
-const browserSync = require("browser-sync").create();
-const header = require("gulp-header");
-const uglify = require("gulp-uglify");
-const pump = require("pump");
-const rename = require("gulp-rename");
-const postcss = require("gulp-postcss");
-const cssnano = require("gulp-cssnano");
-const autoprefixer = require("autoprefixer");
-const package = require("./package.json");
+const { dest, series, src, watch } = require('gulp');
+const gutil = require('gulp-util');
+const cp = require('child_process');
+const sass = require('gulp-sass');
+const rollup = require('rollup');
+const babel = require('rollup-plugin-babel');
+const browserSync = require('browser-sync').create();
+const header = require('gulp-header');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const postcss = require('gulp-postcss');
+const cssnano = require('gulp-cssnano');
+const autoprefixer = require('autoprefixer');
+const package = require('./package.json');
 
 // Get the current year for copyright in the banner
 const currentYear = new Date().getFullYear();
@@ -52,13 +50,13 @@ const banner = `/*! ${package.name} - @version ${package.version}
 
 // Development server
 function watchFiles(callback) {
-  browserSync.init(["docs/css/**/*.css", "docs/js/**/*.js", "docs/**/*.html"], {
+  browserSync.init(['docs/css/**/*.css', 'docs/js/**/*.js', 'docs/**/*.html'], {
     server: {
-      baseDir: "./docs"
+      baseDir: './docs'
     }
   });
-  watch("src/sass/**/*.scss", { ignoreInitial: false }, compileSass);
-  watch("src/js/**/*.js", { ignoreInitial: false }, compileJS);
+  watch('src/sass/**/*.scss', { ignoreInitial: false }, compileSass);
+  watch('src/js/**/*.js', { ignoreInitial: false }, compileJS);
 
   callback();
 }
@@ -74,35 +72,33 @@ function watchFiles(callback) {
  * More about Nunjucks here:
  * https://mozilla.github.io/nunjucks/
  */
-function eleventy(callback) {
-  cp.exec("npx eleventy", function(stdout, stderr) {
+function compileHTML(callback) {
+  cp.exec('npx eleventy', function(err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
-    callback();
+    callback(err);
   });
 }
 
-function watchEleventy() {
-  const eleventy = cp.spawn("npx", ["eleventy", "--watch"]);
+function watchHTML(callback) {
+  const eleventy = cp.spawn('npx', ['eleventy', '--watch']);
 
   const eleventyLogger = function(buffer) {
     buffer
       .toString()
       .split(/\n/)
-      .forEach(message => gutil.log("Eleventy: " + message));
+      .forEach(message => gutil.log('Eleventy: ' + message));
   };
-  eleventy.stdout.on("data", eleventyLogger);
-  eleventy.stderr.on("data", eleventyLogger);
+  eleventy.stdout.on('data', eleventyLogger);
+  eleventy.stderr.on('data', eleventyLogger);
+
+  callback();
 }
 
 function compileSass() {
-  return src("src/sass/**/*.scss")
-    .pipe(sass({ outputStyle: "expanded" }).on("error", sass.logError))
-    .pipe(dest("docs/css/"));
-}
-
-function watchSass() {
-  watch("src/sass/**/*.scss", compileSass);
+  return src('src/sass/**/*.scss')
+    .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
+    .pipe(dest('docs/css/'));
 }
 
 /**
@@ -113,85 +109,71 @@ function watchSass() {
 function compileJS() {
   return rollup
     .rollup({
-      input: "./src/js/" + package.name + ".js",
-      plugins: [babel()]
+      input: './src/js/' + package.name + '.js',
+      plugins: [babel({ runtimeHelpers: true })]
     })
     .then(bundle => {
       return bundle.write({
-        file: "./docs/js/" + package.name + ".js",
-        format: "umd",
-        /**
-         * Change this property to the namespace you want you're component
-         * to have. For example "Widget". Then it's public methods should
-         * be available as Widget.init().
-         */
-        name: "MyComponent",
+        file: './docs/js/' + package.name + '.js',
+        format: 'umd',
+        name: package.component,
         sourcemap: true
       });
     });
 }
 
-function watchJS() {
-  watch("src/js/**/*.js", compileJS);
-}
-
 function copyJS() {
-  return src("./docs/js/**/*.js").pipe(dest("./dist/js/"));
+  return src('./docs/js/**/*.js').pipe(dest('./dist/js/'));
 }
 
 function headerJS(callback) {
-  src("./dist/js/" + package.name + ".js")
+  src('./dist/js/' + package.name + '.js')
     .pipe(header(banner, { package: package }))
-    .pipe(dest("./dist/js/"));
+    .pipe(dest('./dist/js/'));
 
-  src("./dist/js/" + package.name + ".min.js")
+  src('./dist/js/' + package.name + '.min.js')
     .pipe(header(banner, { package: package }))
-    .pipe(dest("./dist/js/"));
+    .pipe(dest('./dist/js/'));
 
   callback();
 }
 
 function minifyJS() {
-  return src("dist/js/" + package.name + ".js")
-    .pipe(
-      babel({
-        presets: [babelEnv]
-      })
-    )
+  return src('dist/js/' + package.name + '.js')
     .pipe(uglify())
-    .pipe(rename({ suffix: ".min" }))
-    .pipe(dest("dist/js"));
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(dest('dist/js'));
 }
 
 function copyCSS() {
-  return src("./docs/css/**/*.css").pipe(dest("./dist/css/"));
+  return src('./docs/css/**/*.css').pipe(dest('./dist/css/'));
 }
 
 function minifyCSS() {
-  return src("dist/css/" + package.name + ".css")
+  return src('dist/css/' + package.name + '.css')
     .pipe(cssnano())
     .pipe(
       rename({
-        suffix: ".min"
+        suffix: '.min'
       })
     )
-    .pipe(dest("dist/css/"));
+    .pipe(dest('dist/css/'));
 }
 
 function prefixCSS() {
-  return src("dist/css/" + package.name + ".css")
-    .pipe(postcss([autoprefixer({ browsers: ["last 2 versions"] })]))
-    .pipe(dest("dist/css/"));
+  return src('dist/css/' + package.name + '.css')
+    .pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
+    .pipe(dest('dist/css/'));
 }
 
 function headerCSS(callback) {
-  src("dist/css/" + package.name + ".css")
+  src('dist/css/' + package.name + '.css')
     .pipe(header(banner, { package: package }))
-    .pipe(dest("dist/css/"));
+    .pipe(dest('dist/css/'));
 
-  src("dist/css/" + package.name + ".min.css")
+  src('dist/css/' + package.name + '.min.css')
     .pipe(header(banner, { package: package }))
-    .pipe(dest("dist/css/"));
+    .pipe(dest('dist/css/'));
 
   callback();
 }
@@ -209,8 +191,7 @@ exports.release = series(
   headerCSS
 );
 
-// Groups up the watch tasks
-exports.watch = series(watchEleventy, watchSass, watchJS);
+exports.buildDocs = series(compileHTML, compileSass, compileJS);
 
 // Default development task
-exports.default = series(eleventy, watchFiles, watchSass, watchJS, watchEleventy);
+exports.default = series(watchFiles, watchHTML);
