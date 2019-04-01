@@ -1,7 +1,7 @@
 /*!
 * rivet-add-on-boilerplate - @version 0.1.1
 
-* Copyright (C) 2019 The Trustees of Indiana University
+* Copyright (C) 2018 The Trustees of Indiana University
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
