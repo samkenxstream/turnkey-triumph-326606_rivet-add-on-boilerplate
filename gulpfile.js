@@ -17,7 +17,7 @@ const package = require('./package.json');
 const banner = `/*!
 * ${package.name} - @version ${package.version}
 
-* Copyright (C) 2019 The Trustees of Indiana University
+* Copyright (C) 2018 The Trustees of Indiana University
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
