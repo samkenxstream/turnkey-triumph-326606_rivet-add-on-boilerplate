@@ -94,7 +94,7 @@ function compileJS() {
       return bundle.write({
         file: './docs/js/' + package.name + '.js',
         format: 'umd',
-        name: package.component,
+        name: package.addOnName,
         sourcemap: true
       });
     });
