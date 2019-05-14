@@ -36,6 +36,7 @@
     "rollup": "^1.7.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.2",
+    "stylelint-config-rivet": "^1.0.0",
     "tslib": "^1.9.3"
   },
   "dependencies": {
