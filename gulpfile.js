@@ -1,16 +1,17 @@
 const { dest, series, src, watch } = require('gulp');
-const gutil = require('gulp-util');
-const cp = require('child_process');
-const sass = require('gulp-sass');
-const rollup = require('rollup');
+const autoprefixer = require('autoprefixer');
 const babel = require('rollup-plugin-babel');
 const browserSync = require('browser-sync').create();
-const header = require('gulp-header');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
-const postcss = require('gulp-postcss');
+const cp = require('child_process');
 const cssnano = require('gulp-cssnano');
-const autoprefixer = require('autoprefixer');
+const gutil = require('gulp-util');
+const header = require('gulp-header');
+const postcss = require('gulp-postcss');
+const rename = require('gulp-rename');
+const rollup = require('rollup');
+const sass = require('gulp-sass');
+const stylelint = require("gulp-stylelint");
+const uglify = require('gulp-uglify');
 const package = require('./package.json');
 
 // Create the string for the verion number banner.
@@ -30,7 +31,7 @@ function watchFiles(callback) {
       baseDir: './docs'
     }
   });
-  watch('src/sass/**/*.scss', { ignoreInitial: false }, compileSass);
+  watch('src/sass/**/*.scss', { ignoreInitial: false }, series(lintSassWatch, compileSass));
   watch('src/js/**/*.js', { ignoreInitial: false }, compileJS);
 
   callback();
@@ -74,6 +75,25 @@ function compileSass() {
   return src('src/sass/**/*.scss')
     .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
     .pipe(dest('docs/css/'));
+}
+
+function lintSassWatch() {
+  return src("src/sass/**/*.scss")
+  .pipe(stylelint({
+    failAfterError: false,
+    reporters: [
+      {formatter: 'string', console: true}
+    ]
+  }));
+}
+
+function lintSassBuild() {
+  return src("src/sass/**/*.scss")
+  .pipe(stylelint({
+    reporters: [
+      {formatter: 'string', console: true}
+    ]
+  }));
 }
 
 /**
@@ -159,6 +179,7 @@ exports.release = series(
   copyJS,
   minifyJS,
   headerJS,
+  lintSassBuild,
   compileSass,
   copyCSS,
   prefixCSS,
