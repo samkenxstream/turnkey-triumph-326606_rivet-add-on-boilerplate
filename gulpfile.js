@@ -1,7 +1,9 @@
 const { dest, series, src, watch } = require('gulp');
+const { eslint } = require('rollup-plugin-eslint');
 const autoprefixer = require('autoprefixer');
 const babel = require('rollup-plugin-babel');
 const browserSync = require('browser-sync').create();
+const commonJS = require('rollup-plugin-commonjs');
 const cp = require('child_process');
 const cssnano = require('gulp-cssnano');
 const gutil = require('gulp-util');
@@ -32,7 +34,7 @@ function watchFiles(callback) {
     }
   });
   watch('src/sass/**/*.scss', { ignoreInitial: false }, series(lintSassWatch, compileSass));
-  watch('src/js/**/*.js', { ignoreInitial: false }, compileJS);
+  watch('src/js/**/*.js', { ignoreInitial: false }, compileJSDev);
 
   callback();
 }
@@ -101,11 +103,27 @@ function lintSassBuild() {
  * See more here:
  * https://rollupjs.org/guide/en#gulp
  */
-function compileJS() {
+function compileJSDev() {
   return rollup
     .rollup({
       input: './src/js/' + package.name + '.js',
-      plugins: [babel({ runtimeHelpers: true })]
+      plugins: [eslint({ throwOnError: false }), commonJS(), babel({ runtimeHelpers: true })]
+    })
+    .then(bundle => {
+      return bundle.write({
+        file: './docs/js/' + package.name + '.js',
+        format: 'umd',
+        name: package.addOnName,
+        sourcemap: true
+      });
+    });
+}
+
+function compileJSBuild() {
+  return rollup
+    .rollup({
+      input: './src/js/' + package.name + '.js',
+      plugins: [eslint({ throwOnError: true }), commonJS(), babel({ runtimeHelpers: true })]
     })
     .then(bundle => {
       return bundle.write({
@@ -175,7 +193,7 @@ function headerCSS(callback) {
 
 // Builds the "dist" folder with compiled and minified CSS & JS
 exports.release = series(
-  compileJS,
+  compileJSBuild,
   copyJS,
   minifyJS,
   headerJS,
@@ -187,7 +205,7 @@ exports.release = series(
   headerCSS
 );
 
-exports.buildDocs = series(compileHTML, compileSass, compileJS);
+exports.buildDocs = series(compileHTML, compileSass, compileJSDev);
 
 // Default development task
 exports.default = series(watchFiles, watchHTML);
