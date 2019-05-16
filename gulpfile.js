@@ -112,28 +112,30 @@ function compileJSDev() {
     .then(bundle => {
       return bundle.write({
         file: './docs/js/' + package.name + '.js',
-        format: 'umd',
+        format: 'iife',
         name: package.addOnName,
-        sourcemap: true
       });
     });
 }
 
-function compileJSBuild() {
-  return rollup
-    .rollup({
-      input: './src/js/' + package.name + '.js',
-      plugins: [eslint({ throwOnError: true }), commonJS(), babel({ runtimeHelpers: true })]
-    })
-    .then(bundle => {
-      return bundle.write({
-        file: './docs/js/' + package.name + '.js',
-        format: 'umd',
-        name: package.addOnName,
-        sourcemap: true
-      });
-    });
-}
+async function compileJSBuild() {
+  const bundle = await rollup.rollup({
+    input: './src/js/' + package.name + '.js',
+    plugins: [eslint({ throwOnError: true }), commonJS(), babel({ runtimeHelpers: true })]
+  });
+
+  await bundle.write({
+    file: './docs/js/' + package.name + '.js',
+    format: 'iife',
+    name: package.addOnName
+  });
+  
+  await bundle.write({
+    file: './docs/js/' + package.name + '-esm.js',
+    format: 'es',
+    name: package.addOnName
+  });
+};
 
 function copyJS() {
   return src('./docs/js/**/*.js').pipe(dest('./dist/js/'));

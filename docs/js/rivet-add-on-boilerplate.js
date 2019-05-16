@@ -1,8 +1,5 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.MyComponent = {}));
-}(this, function (exports) { 'use strict';
+var MyComponent = (function (exports) {
+  'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -53,7 +50,6 @@
 
   exports.AddOn = AddOn;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return exports;
 
-}));
-//# sourceMappingURL=rivet-add-on-boilerplate.js.map
+}({}));
