@@ -20,7 +20,9 @@
   <script src="./js/rivet-add-on-boilerplate.js"></script>
   <script>
     hljs.initHighlightingOnLoad();
-    MyComponent.init();
+    const myComponent = new MyComponent.AddOn({
+      id: 'my-button'
+    });
   </script>
 </body>
 </html>

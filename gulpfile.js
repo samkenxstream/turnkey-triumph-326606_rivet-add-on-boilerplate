@@ -1,16 +1,19 @@
 const { dest, series, src, watch } = require('gulp');
-const gutil = require('gulp-util');
-const cp = require('child_process');
-const sass = require('gulp-sass');
-const rollup = require('rollup');
+const { eslint } = require('rollup-plugin-eslint');
+const autoprefixer = require('autoprefixer');
 const babel = require('rollup-plugin-babel');
 const browserSync = require('browser-sync').create();
-const header = require('gulp-header');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
-const postcss = require('gulp-postcss');
+const commonJS = require('rollup-plugin-commonjs');
+const cp = require('child_process');
 const cssnano = require('gulp-cssnano');
-const autoprefixer = require('autoprefixer');
+const gutil = require('gulp-util');
+const header = require('gulp-header');
+const postcss = require('gulp-postcss');
+const rename = require('gulp-rename');
+const rollup = require('rollup');
+const sass = require('gulp-sass');
+const stylelint = require("gulp-stylelint");
+const uglify = require('gulp-uglify');
 const package = require('./package.json');
 
 // Create the string for the verion number banner.
@@ -30,8 +33,8 @@ function watchFiles(callback) {
       baseDir: './docs'
     }
   });
-  watch('src/sass/**/*.scss', { ignoreInitial: false }, compileSass);
-  watch('src/js/**/*.js', { ignoreInitial: false }, compileJS);
+  watch('src/sass/**/*.scss', { ignoreInitial: false }, series(lintSassWatch, compileSass));
+  watch('src/js/**/*.js', { ignoreInitial: false }, compileJSDev);
 
   callback();
 }
@@ -76,26 +79,63 @@ function compileSass() {
     .pipe(dest('docs/css/'));
 }
 
+function lintSassWatch() {
+  return src("src/sass/**/*.scss")
+  .pipe(stylelint({
+    failAfterError: false,
+    reporters: [
+      {formatter: 'string', console: true}
+    ]
+  }));
+}
+
+function lintSassBuild() {
+  return src("src/sass/**/*.scss")
+  .pipe(stylelint({
+    reporters: [
+      {formatter: 'string', console: true}
+    ]
+  }));
+}
+
 /**
  * Uses Rollup to compile ES6 down to browser JS with a UMD wrapper.
  * See more here:
  * https://rollupjs.org/guide/en#gulp
  */
-function compileJS() {
+function compileJSDev() {
   return rollup
     .rollup({
       input: './src/js/' + package.name + '.js',
-      plugins: [babel({ runtimeHelpers: true })]
+      plugins: [eslint({ throwOnError: false }), commonJS(), babel({ runtimeHelpers: true })]
     })
     .then(bundle => {
       return bundle.write({
         file: './docs/js/' + package.name + '.js',
-        format: 'umd',
+        format: 'iife',
         name: package.addOnName,
-        sourcemap: true
       });
     });
 }
+
+async function compileJSBuild() {
+  const bundle = await rollup.rollup({
+    input: './src/js/' + package.name + '.js',
+    plugins: [eslint({ throwOnError: true }), commonJS(), babel({ runtimeHelpers: true })]
+  });
+
+  await bundle.write({
+    file: './docs/js/' + package.name + '.js',
+    format: 'iife',
+    name: package.addOnName
+  });
+  
+  await bundle.write({
+    file: './docs/js/' + package.name + '-esm.js',
+    format: 'es',
+    name: package.addOnName
+  });
+};
 
 function copyJS() {
   return src('./docs/js/**/*.js').pipe(dest('./dist/js/'));
@@ -155,10 +195,11 @@ function headerCSS(callback) {
 
 // Builds the "dist" folder with compiled and minified CSS & JS
 exports.release = series(
-  compileJS,
+  compileJSBuild,
   copyJS,
   minifyJS,
   headerJS,
+  lintSassBuild,
   compileSass,
   copyCSS,
   prefixCSS,
@@ -166,7 +207,7 @@ exports.release = series(
   headerCSS
 );
 
-exports.buildDocs = series(compileHTML, compileSass, compileJS);
+exports.buildDocs = series(compileHTML, compileSass, compileJSDev);
 
 // Default development task
 exports.default = series(watchFiles, watchHTML);
