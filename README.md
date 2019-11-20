@@ -19,6 +19,8 @@ src/sass/rivet-add-on-boilerplate.scss
 src/sass/components/_rivet-add-on-boilerplate.scss
 ```
 
+You will also need to update the value for the `addOnName` key in the `package.json` file to reflect the name of your add-on.
+
 ### 2. Include the CSS and JavaScript in your page
 After renaming the CSS and JavaScript files to reflect the name of your add-on, update the `href` and `src` attribute values on lines `10` and `20` in `src/_includes/layouts/base.njk` to point to your renamed files.
 

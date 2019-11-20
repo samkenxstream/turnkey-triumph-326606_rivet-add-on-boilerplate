@@ -1,9 +1,15 @@
+export class AddOn {
+  constructor(options) {
+    this._handleClick = this._handleClick.bind(this);
 
-const init = () => {
-  console.log('Rivet Add-on Boilerplate!');
+    this.init(options);
+  }
+
+  _handleClick() {
+    alert('Button clicked!');
+  }
+
+  init(options) {
+    document.getElementById(options.id).addEventListener('click', this._handleClick, false);
+  }
 }
-
-/**
- * Export the methods you want to make public inside of this object.
- */
-export default { init };
