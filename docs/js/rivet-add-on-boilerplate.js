@@ -23,9 +23,7 @@ var MyComponent = (function (exports) {
     return Constructor;
   }
 
-  var AddOn =
-  /*#__PURE__*/
-  function () {
+  var AddOn = /*#__PURE__*/function () {
     function AddOn(options) {
       _classCallCheck(this, AddOn);
 
